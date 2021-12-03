@@ -10,7 +10,7 @@
       <v-icon>mdi-history</v-icon>
     </v-btn>
 
-    <v-btn nuxt to ='/chat'>
+    <v-btn nuxt to ='/chatlist'>
       <span>채팅 목록</span>
 
       <v-icon>mdi-heart</v-icon>
