@@ -36,6 +36,16 @@
               :rules="nicknameRules"
               required
             />
+            <v-select
+              v-model="membership"
+              label="회원구분"
+              :items="membership"
+              item-text="name"
+              item-value="value"
+              type="membership"
+              :rules="membershipRules"
+              required
+            />
             <v-checkbox
               v-model="terms"
               required
@@ -60,7 +70,14 @@
         password: '',
         passwordCheck: '',
         nickname: '',
+        membership: '',
         terms: false,
+        membership:[
+          {name : '일반', value: '일반'},
+          {name : '학생', value: '학생'},
+          {name : '강사', value: '강사'},
+          {name : '기업', value: '기업'}
+        ],
         emailRules: [
           v => !!v || '이메일은 필수입니다.',
           v => /.+@.+/.test(v) || '이메일이 유효하지 않습니다.',
@@ -74,6 +91,9 @@
         passwordCheckRules: [
           v => !!v || '비밀번호 확인은 필수입니다.',
           v => v === this.password || '비밀번호가 일치하지 않습니다.',
+        ],
+        membershipRulse: [
+          v => !!v || '회원구분은 필수입니다.',
         ],
       };
     },
