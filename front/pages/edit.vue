@@ -25,10 +25,15 @@
               :rules="areaRules"
               required
             />
-
+          </v-form>
+        </v-container>
+        <v-container>
             <v-btn color="blue" type="submit" nuxt to = "/friendpage">변경하기</v-btn>
             <v-btn color="blue" nuxt to="/friendpage">취소</v-btn>
-          </v-form>
+        </v-container>
+        <v-container>
+            <v-btn color="blue" type="submit" nuxt to = "/login">로그아웃</v-btn>
+            <v-btn color="blue" type="submit" nuxt to="/login">회원탈퇴</v-btn>
         </v-container>
       </v-card>
     </v-container>
@@ -40,9 +45,7 @@
     data() {
       return {
         valid: false,
-        passwordCheck: '',
-        nickname: '',
-        membership: '',
+        status_message: '',
         terms: false,
         area:[
           {name : '학관', value: '학관'},
@@ -72,7 +75,7 @@
     },
     head() {
       return {
-        title: '회원가입',
+        title: '내 정보 수정',
       };
     },
   };
