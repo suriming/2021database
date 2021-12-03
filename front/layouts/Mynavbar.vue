@@ -25,7 +25,7 @@ export default {}
 <style scoped>
 nav {
   box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
-  background-color: #eee;
+  background-color: #EDE7F6;
   display: flex;
   justify-content: space-between;
   align-items: center;
