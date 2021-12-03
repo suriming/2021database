@@ -5,6 +5,7 @@
   >
     <v-list subheader>
       <v-subheader>내 정보</v-subheader>
+      <v-btn dark color="blue" nuxt to="/edit" type="submit">내 정보 수정</v-btn>
 
       <v-list-item
         v-for="chat in recent"
