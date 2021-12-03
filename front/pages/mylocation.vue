@@ -1,4 +1,9 @@
-<template>
+<template>  
+<v-card
+    class="mx-auto"
+    max-width="500"
+  >
+  
   <v-container>
     <v-card
     elevation="1"
@@ -60,6 +65,8 @@
 
     <bottom-nav />
   </v-container>
+
+  </v-card>
 </template>
 
 <script>
