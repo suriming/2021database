@@ -38,8 +38,9 @@
         v-for="chat in previous"
         :key="chat.title"
       >
-        <v-list-item-avatar>
-          <v-img
+        <!-- <v-list-item-avatar> -->
+          <friend-list />
+          <!-- <v-img
             :alt="`${chat.title} avatar`"
             :src="chat.avatar"
           ></v-img>
@@ -47,7 +48,7 @@
 
         <v-list-item-content>
           <v-list-item-title v-text="chat.title"></v-list-item-title>
-        </v-list-item-content>
+        </v-list-item-content> -->
       </v-list-item>
     </v-list>
   <v-container>
@@ -58,9 +59,11 @@
 
 <script>
 import BottomNav from '../components/BottomNav.vue';
+import FriendList from '../components/TotalFriendList.vue';
   export default {
     components: {
         BottomNav,
+        FriendList,
     }
   }
 </script>
