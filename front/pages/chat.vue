@@ -3,8 +3,15 @@
     class="mx-auto"
     max-width="500"
   >
+  <v-container>
+    <v-header>채팅 목록</v-header>
+  </v-container>
+
+  <v-divider></v-divider>
+  
     <v-list subheader>
-      <v-subheader>Recent chat</v-subheader>
+      <v-btn dark color="blue" nuxt to="/friendSearch" type="submit">친구 검색</v-btn>
+      <v-subheader>진행 중인 채팅</v-subheader>
 
       <v-list-item
         v-for="chat in recent"
@@ -28,28 +35,6 @@
         </v-list-item-icon>
       </v-list-item>
     </v-list>
-
-    <v-divider></v-divider>
-
-    <v-list subheader>
-      <v-subheader>Previous chats</v-subheader>
-
-      <v-list-item
-        v-for="chat in previous"
-        :key="chat.title"
-      >
-        <v-list-item-avatar>
-          <v-img
-            :alt="`${chat.title} avatar`"
-            :src="chat.avatar"
-          ></v-img>
-        </v-list-item-avatar>
-
-        <v-list-item-content>
-          <v-list-item-title v-text="chat.title"></v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-    </v-list>
   <v-container>
     <bottom-nav />
   </v-container>
@@ -71,22 +56,19 @@
         },
         {
           active: true,
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
-          title: 'Mike Carlson',
+          title: '채팅 리스트를 불러옵시다',
         },
         {
+          active: false,
           avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
           title: 'Cindy Baker',
         },
         {
+          active: false,
           avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
           title: 'Ali Connors',
         },
       ],
-      previous: [{
-        title: 'Travis Howard',
-        avatar: 'https://cdn.vuetifyjs.com/images/lists/5.jpg',
-      }],
     }),
   }
 </script>
