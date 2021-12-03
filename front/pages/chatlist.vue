@@ -29,9 +29,7 @@
         </v-list-item-content>
 
         <v-list-item-icon>
-          <v-icon :color="chat.active ? 'deep-purple accent-4' : 'grey'">
-            mdi-message-outline
-          </v-icon>
+           <v-btn :color="chat.active ? 'blue' : 'grey'" nuxt to="/chatroom" type="submit">채팅 하기</v-btn>
         </v-list-item-icon>
       </v-list-item>
     </v-list>
