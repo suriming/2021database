@@ -5,12 +5,12 @@
   >
   <v-container>
     <v-header>채팅 목록</v-header>
+    <v-btn dark color="blue" nuxt to="/friendSearch" type="submit">친구 검색</v-btn>
   </v-container>
 
   <v-divider></v-divider>
   
     <v-list subheader>
-      <v-btn dark color="blue" nuxt to="/friendSearch" type="submit">친구 검색</v-btn>
       <v-subheader>진행 중인 채팅</v-subheader>
 
       <v-list-item
@@ -53,6 +53,7 @@
           active: true,
           avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
           title: 'Jason Oner',
+          
         },
         {
           active: true,
