@@ -1,9 +1,9 @@
 const mysql = require('mysql');
 const connection = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: '110318', // 이전에 입력했던 비밀번호
-    database: 'db', // 이전에 입력했던 데이터베이스 명
+    host: '165.132.105.26',
+    user: 'team06',
+    password: 'project06', // 이전에 입력했던 비밀번호
+    database: 'database06', // 이전에 입력했던 데이터베이스 명
     multipleStatements: true,
     connectionLimit: 1000,
 });

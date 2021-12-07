@@ -1,9 +1,12 @@
 import Vue from "vue";
 
 export const state = () => ({
-  me: null,
-  friendList: []
+  me: 'admin',
+  friendList: [],
+  nickname: 'yonsei',
+  other: {}
 });
+
 
 const totalFriends = 8;
 const limit=3;
@@ -22,19 +25,57 @@ export const mutations = {
     const index = state.friendList.findIndex(v => v.id ===payload.id);
     state.follwerList.splice(index, 1);
   },
-  loadFriend(state) {
-    const diff = totalFriends - state.friendList.length;
-    const fakeUsers = Array(diff > limit ? limit : diff).fill().map(v => ({
-      id: Math.random().toString(),
-      nickname: Math.floor(Math.random() * 1000),
-    }));
-    state.friendList = state.friendList.concat(fakeUsers);
-    // state.hasMoreFollower = fakeUsers.length === limit;
+  loadFriend(state, payload) {
+    console.log(payload[0])
+    console.log(payload[0].FRIEND_ID)
+    var tmp1 = [];
+    var tmp2 = [];
+    if (tmp1.length>0){
+      tmp1.length = 0;
+    }
+    if (tmp2.length>0){
+      tmp2.length = 0;
+    }
+    for(let i=0; i<2;i++){
+      tmp1.push(payload[i].FRIEND_ID)
+      tmp2.push(payload[i].F_ID)
+    }
+    const tmpuser = tmp1.map(function(v,i) {
+      return {
+        id: v,
+        nickname: tmp2[i]
+      }
+    })
+    state.friendList = tmpuser;
+    // const tmp = Array.map( v=>
+    //   id: 
+    //   )
+    // state.friendList = payload.data
+    // const diff = totalFriends - state.friendList.length;
+    // const fakeUsers = Array(diff > limit ? limit : diff).fill().map(v => ({
+    //   id: Math.random().toString(),
+    //   nickname: Math.floor(Math.random()*1000),
+    // }));
+
+  //  state.friendList = state.friendList.concat(tmpuser);
+    // state.friendList = payload.data
   },
 };
 
 export const actions = {
+  async loadUser({ state, commit }) {
+    try {
+      const res = await this.$axios.get('/user', {
+        withCredentials: true,
+      });
+      commit('setMe', res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  },
+
   signUp({ commit, state }, payload) {
+  console.log(this.$axios);
   // 서버에 회원가입 요청을 보내는 부분
     commit('setMe', payload)
   },
@@ -54,4 +95,24 @@ export const actions = {
     // 비동기 요청
     commit('removeFriend', payload);
   },
-};
+  loadFriend({ commit, state }, payload) {
+    // console.log(data);
+    // commit('loadFriend');
+    return this.$axios.get('http://localhost:3085/api/friends?My_id=admin@yonsei.ac.kr', {
+      withCredentials: true,
+      res: [],
+    })
+      .then((res) => {
+        // console.log(res.FRIEND_ID)
+        // const data = res.body
+        // const test = res.data.FRIEND_ID.
+        console.log(res),
+        console.log(res.data),
+        
+        commit('loadFriend', res.data)
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  },
+}

@@ -14,5 +14,11 @@ module.exports = {
     vuetify: {
 
     },
+    // serverMiddleware: [
+    //     ~api/index.js
+    // ],
+    axios: {
+        baseURL: 'https://localhost:3000'
+    }
 
 };
