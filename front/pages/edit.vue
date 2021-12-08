@@ -6,6 +6,7 @@
         max-width="500"      
         >
         <v-container>
+          <v-btn color="blue" nuxt to="/friendpage">뒤로가기</v-btn>
           <v-subheader>내 정보 수정</v-subheader>
           <v-form ref="form" v-model="valid" @submit.prevent="onSubmitForm">
             <v-text-field
@@ -15,7 +16,8 @@
               :rules="status_messageRules"
               required
             />
-            <v-select
+            <v-btn color="blue" type="submit" nuxt to = "/friendpage">변경하기</v-btn>
+            <!--v-select
               v-model="area"
               label="지역"
               :items="area"
@@ -24,12 +26,36 @@
               type="area"
               :rules="areaRules"
               required
-            />
+            /-->
           </v-form>
         </v-container>
+
+        <!--v-container fluid>
+          <v-textarea
+            clearable
+            clear-icon="mdi-close-circle"
+            label="현재위치"
+            value="csv파일을 업로드하면 정보가 노출 됩니다."
+          ></v-textarea>
+        </!--v-container-->
+        <v-container fluid>
+      <v-row>
+        <v-col
+          cols="12"
+        >
+          <v-textarea
+            solo
+            name="csv-input"
+            label="현재 위치"
+          ></v-textarea>
+        </v-col>
+      </v-row>
+    </v-container>
+        
         <v-container>
-            <v-btn color="blue" type="submit" nuxt to = "/friendpage">변경하기</v-btn>
-            <v-btn color="blue" nuxt to="/friendpage">취소</v-btn>
+            <v-file-input placeholder="위치정보가 담긴 csv파일을 올려보아요!"
+              truncate-length="15"
+            ></v-file-input>
         </v-container>
         <v-container>
             <v-btn color="blue" type="submit" nuxt to = "/login">로그아웃</v-btn>
