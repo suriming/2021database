@@ -2,6 +2,9 @@ module.exports = {
     head: {
         title: 'NodeBird',
     }, 
+    build: {
+        vendor: ['socket.io-client']
+      },
     modules: [
         '@nuxtjs/axios'
     ],
@@ -9,7 +12,7 @@ module.exports = {
         '@nuxtjs/vuetify',
     ],
     plugins: [
-        { src: '~/plugins/socket.client.js' }
+        { src: '~/plugins/socket', mode:'client' }
     ],
     vuetify: {
 
