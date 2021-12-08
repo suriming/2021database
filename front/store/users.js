@@ -1,9 +1,10 @@
 import Vue from "vue";
 
 export const state = () => ({
-  me: 'admin',
+  me: null,
+  isLoggedIn: false,
   friendList: [],
-  nickname: 'yonsei',
+  nickname: '',
   other: {}
 });
 
@@ -13,8 +14,19 @@ const limit=3;
 
 export const mutations = {
   setMe(state, payload) {
-    state.me = payload;
-  }, 
+    console.log(payload)
+    if (payload.success == false) {
+      state.isLoggedIn = false
+    }
+    else {
+      state.isLoggedIn = true
+      console.log(state.isLoggedIn)
+      state.me = payload
+    }
+  },
+  logOut(state, payload){
+    state.isLoggedIn = false
+  },
   changeNickname(state, payload){
     state.me.nickname = payload.nickname
   },
@@ -90,11 +102,25 @@ export const actions = {
       console.error(err);
     });
   },
-  logIn({ commit }, payload) {
-    commit('setMe', payload)
+  async logIn({ commit }, payload) {
+    await this.$axios.post('http://localhost:3085/user/login', {
+      id: payload.id,
+      password: payload.password,
+    }, {
+      withCredentials:true,
+    })
+    .then((res) => {
+      commit('setMe', res.data);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
   },   
-  logOut(context, payload) {
-    commit('setMe', null);
+  logOut( { commit }) {
+    this.$axios.post('http://localhost:3085/user/logout', {}, {
+      withCredentials: true,
+    }),
+    commit('logOut')
   },
   changeNickname({ commit }, payload) {
     commit('changeNickname', payload);
