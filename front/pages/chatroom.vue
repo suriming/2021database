@@ -1,8 +1,9 @@
 <template>
+
   <div class="chat-wrapper">
     <div
-      ref="chat"
-      class="chat"
+      ref="chatroom"
+      class="chatroom"
     >
       <Message
         v-for="(message, index) in messages"
@@ -11,38 +12,27 @@
         :owner="message.id === user.id"
       />
     </div>
-    <div
-      v-if="typingUsers.length"
-      class="chat__typing"
-    >
-      <p
-        v-for="(typingUser, index) in typingUsers"
-        :key="`typingUser-${index}`"
-        class="chat__typing-user"
-      >
-        {{ typingUser.name }} is typing...
-      </p>
-    </div>
+
     <div class="chat__form">
       <ChatForm />
     </div>
   </div>
+
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapState } from "vuex";
 import Message from "@/components/Message";
 import ChatForm from "@/components/ChatForm";
 export default {
   name: "ChatPage",
-  layout: "chat",
+  layout: "chatroom",
   components: {
     Message,
     ChatForm,
   },
   computed: {
     ...mapState(["user", "messages", "users"]),
-    ...mapGetters(["typingUsers"]),
   },
   watch: {
     messages() {
@@ -55,7 +45,7 @@ export default {
   },
   head() {
     return {
-      title: `Room ${this.user.room}`,
+      title: `Chat Room ${this.user}`,
     };
   },
 };
