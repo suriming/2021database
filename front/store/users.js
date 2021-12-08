@@ -135,7 +135,7 @@ export const actions = {
   loadFriend({ commit, state }, payload) {
     // console.log(data);
     // commit('loadFriend');
-    return this.$axios.get('http://localhost:3085/api/friends/list/?My_id=admin@yonsei.ac.kr', {
+    return this.$axios.get(`http://localhost:3085/api/friends/list/?My_id=${state.me.id}`, {
       withCredentials: true,
       res: [],
     })
