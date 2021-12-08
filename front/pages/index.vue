@@ -14,7 +14,7 @@
                 <v-text-field
                     v-model="email"
                     :rules="emailRules"
-                    label="이메일"
+                    label="아이디"
                     type="email"
                     required
                 />
@@ -46,8 +46,8 @@
         email: '',
         password: '',
         emailRules: [
-          v => !!v || '이메일은 필수입니다.',
-          v => /.+@.+/.test(v) || '이메일이 유효하지 않습니다.',
+          v => !!v || '아이디는 필수입니다.',
+          //v => /.+@.+/.test(v) || '이메일이 유효하지 않습니다.',
         ],
         passwordRules: [
           v => !!v || '비밀번호는 필수입니다.',
