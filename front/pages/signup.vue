@@ -9,10 +9,10 @@
           <v-subheader>회원가입</v-subheader>
           <v-form ref="form" v-model="valid" @submit.prevent="onSubmitForm">
             <v-text-field
-              v-model="email"
-              label="이메일"
-              type="email"
-              :rules="emailRules"
+              v-model="id"
+              label="아이디"
+              type="id"
+              :rules="idRules"
               required
             />
             <v-text-field
@@ -66,7 +66,7 @@
     data() {
       return {
         valid: false,
-        email: '',
+        id: '',
         password: '',
         passwordCheck: '',
         nickname: '',
@@ -78,9 +78,9 @@
           {name : '강사', value: '강사'},
           {name : '기업', value: '기업'}
         ],
-        emailRules: [
-          v => !!v || '이메일은 필수입니다.',
-          v => /.+@.+/.test(v) || '이메일이 유효하지 않습니다.',
+        idRules: [
+          v => !!v || '아이디는 필수입니다.',
+          // v => /.+@.+/.test(v) || '아이디가 유효하지 않습니다.',
         ],
         nicknameRules: [
           v => !!v || '닉네임은 필수입니다.',
@@ -97,12 +97,19 @@
         ],
       };
     },
+    computed: {
+      me() {
+        return this.$store.state.users.me;
+      }
+    },
     methods: {
       onSubmitForm() {
         if (this.$refs.form.validate()) {
           this.$store.dispatch('users/signUp', {
             nickname: this.nickname,
-            email: this.email,
+            id: this.id,
+            password: this.password,
+            membership:this.membership,
           })
             .then(() => {
               this.$router.push({
