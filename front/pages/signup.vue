@@ -97,12 +97,19 @@
         ],
       };
     },
+    computed: {
+      me() {
+        return this.$store.state.users.me;
+      }
+    },
     methods: {
       onSubmitForm() {
         if (this.$refs.form.validate()) {
           this.$store.dispatch('users/signUp', {
             nickname: this.nickname,
-            email: this.email,
+            id: this.email,
+            password: this.password,
+            membership:this.membership,
           })
             .then(() => {
               this.$router.push({

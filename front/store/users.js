@@ -37,8 +37,8 @@ export const mutations = {
       tmp2.length = 0;
     }
     for(let i=0; i<2;i++){
-      tmp1.push(payload[i].FRIEND_ID)
-      tmp2.push(payload[i].F_ID)
+      tmp1.push(payload[i].NAME)
+      tmp2.push(payload[i].STATUS_MESSAGE)
     }
     const tmpuser = tmp1.map(function(v,i) {
       return {
@@ -75,9 +75,7 @@ export const actions = {
   },
 
   signUp({ commit, state }, payload) {
-  console.log(this.$axios);
-  // 서버에 회원가입 요청을 보내는 부분
-    commit('setMe', payload)
+    this.$axios.post()
   },
   logIn({ commit }, payload) {
     commit('setMe', payload)
@@ -98,7 +96,7 @@ export const actions = {
   loadFriend({ commit, state }, payload) {
     // console.log(data);
     // commit('loadFriend');
-    return this.$axios.get('http://localhost:3085/api/friends?My_id=admin@yonsei.ac.kr', {
+    return this.$axios.get('http://localhost:3085/api/friends/list/?My_id=admin@yonsei.ac.kr', {
       withCredentials: true,
       res: [],
     })

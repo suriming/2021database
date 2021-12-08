@@ -1,85 +1,105 @@
 <template>
-  <div>
-    <v-container>
-      <v-card
-        class="mx-auto"
-        max-width="500"      
-        >
-        <v-container>
-          <v-subheader>내 정보 수정</v-subheader>
+  <v-card
+    class="mx-auto"
+    max-width="500"
+  >
+<v-list subheader>
+      <v-subheader>친구 검색</v-subheader>
+      <v-container>
           <v-form ref="form" v-model="valid" @submit.prevent="onSubmitForm">
-            <v-text-field
-              v-model="status_message"
-              label="상태 메시지"
-              type="status_message"
-              :rules="status_messageRules"
-              required
-            />
-            <v-select
-              v-model="area"
-              label="지역"
-              :items="area"
-              item-text="name"
-              item-value="value"
-              type="area"
-              :rules="areaRules"
-              required
-            />
-          </v-form>
-        </v-container>
-        <v-container>
-            <v-btn color="blue" type="submit" nuxt to = "/friendpage">변경하기</v-btn>
-            <v-btn color="blue" nuxt to="/friendpage">취소</v-btn>
-        </v-container>
-        <v-container>
-            <v-btn color="blue" type="submit" nuxt to = "/login">로그아웃</v-btn>
-            <v-btn color="blue" type="submit" nuxt to="/login">회원탈퇴</v-btn>
-        </v-container>
-      </v-card>
-    </v-container>
-  </div>
+                <v-text-field
+                    v-model="friendSearch"
+                    :rules="friendSearchRules"
+                    label="친구 검색"
+                    type="friendSearch"
+                    required
+                />
+                <v-btn dark color="blue" type="submit">검색</v-btn>
+            </v-form>
+      </v-container>
+      
+      <v-list-item
+        v-for="chat in recent"
+        :key="chat.title"
+      >
+        <v-list-item-avatar>
+          <v-img
+            :alt="`${chat.title} avatar`"
+            :src="chat.avatar"
+          ></v-img>
+        </v-list-item-avatar>
+
+        <v-list-item-content>
+          <v-list-item-title v-text="chat.title"></v-list-item-title>
+        </v-list-item-content>
+
+        <v-list-item-icon>
+          <v-icon :color="chat.active ? 'deep-purple accent-4' : 'grey'">
+            mdi-message-outline
+          </v-icon>
+        </v-list-item-icon>
+      </v-list-item>
+    </v-list>
+
+    <v-list subheader>
+      <v-subheader>접속중인 친구</v-subheader>
+      <v-container>
+        접속한 친구 리스트 넣어주세요.
+      </v-container>
+
+      <v-list-item
+        v-for="chat in previous"
+        :key="chat.title"
+      >
+        <v-list-item-avatar>
+          <v-img
+            :alt="`${chat.title} avatar`"
+            :src="chat.avatar"
+          ></v-img>
+        </v-list-item-avatar>
+
+        <v-list-item-content>
+          <v-list-item-title v-text="chat.title"></v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
+
+    <v-divider></v-divider>
+
+    <v-list subheader>
+      <v-subheader>미접속 친구</v-subheader>
+      <v-container>
+        미접속 친구 리스트 넣어주세요.
+      </v-container>
+
+      <v-list-item
+        v-for="chat in previous"
+        :key="chat.title"
+      >
+        <v-list-item-avatar>
+          <v-img
+            :alt="`${chat.title} avatar`"
+            :src="chat.avatar"
+          ></v-img>
+        </v-list-item-avatar>
+
+        <v-list-item-content>
+          <v-list-item-title v-text="chat.title"></v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
+
+  <v-container>
+    <bottom-nav />
+  </v-container>
+  </v-card>
 </template>
 
 <script>
+import BottomNav from '../components/BottomNav.vue';
   export default {
-    data() {
-      return {
-        valid: false,
-        status_message: '',
-        terms: false,
-        area:[
-          {name : '학관', value: '학관'},
-          {name : '백양관', value: '백악관'},
-          {name : '공학관', value: '공학관'},
-          {name : '신촌역', value: '신촌역'}
-        ],
-      };
-    },
-    methods: {
-      onSubmitForm() {
-        if (this.$refs.form.validate()) {
-          this.$store.dispatch('users/signUp', {
-            nickname: this.nickname,
-            email: this.email,
-          })
-            .then(() => {
-              this.$router.push({
-                path: '/login',
-              });
-            })
-            .catch(()=> {
-               alert('폼이 유효하지 않습니다.'); 
-            });
-        }
-      }
-    },
-    head() {
-      return {
-        title: '내 정보 수정',
-      };
-    },
-  };
+    components: {
+        BottomNav,
+    }
+  }
 </script>
-
-<style>
-</style>
