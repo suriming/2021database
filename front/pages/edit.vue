@@ -17,27 +17,8 @@
               required
             />
             <v-btn color="blue" type="submit" nuxt to = "/friendpage">변경하기</v-btn>
-            <!--v-select
-              v-model="area"
-              label="지역"
-              :items="area"
-              item-text="name"
-              item-value="value"
-              type="area"
-              :rules="areaRules"
-              required
-            /-->
           </v-form>
         </v-container>
-
-        <!--v-container fluid>
-          <v-textarea
-            clearable
-            clear-icon="mdi-close-circle"
-            label="현재위치"
-            value="csv파일을 업로드하면 정보가 노출 됩니다."
-          ></v-textarea>
-        </!--v-container-->
         <v-container fluid>
       <v-row>
         <v-col
@@ -51,7 +32,6 @@
         </v-col>
       </v-row>
     </v-container>
-        
         <v-container>
             <v-file-input placeholder="위치정보가 담긴 csv파일을 올려보아요!"
               truncate-length="15"
@@ -70,6 +50,7 @@
   export default {
     data() {
       return {
+        csvfile: '',
         valid: false,
         status_message: '',
         terms: false,
@@ -97,7 +78,7 @@
                alert('폼이 유효하지 않습니다.'); 
             });
         }
-      }
+      },
     },
     head() {
       return {
@@ -106,6 +87,3 @@
     },
   };
 </script>
-
-<style>
-</style>
