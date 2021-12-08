@@ -103,6 +103,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import { mapState, mapGetters } from "vuex";
 import Message from "@/components/Message";
@@ -134,6 +135,7 @@ export default {
   // },
 };
 </script>
+
 <style scoped>
 .chat-wrapper {
   height: 100%;
