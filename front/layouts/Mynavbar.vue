@@ -1,34 +1,40 @@
 <template>
   <nav class="nav">
     <div class="logo">
-      <img src="/yonseitalk.png">
-      
-      <a href="./main" class="logo img">
-       연세톡
+      <a href="./main" class="logo text-lg">
+        연세톡
       </a>
-      
       <span class="subheader">연세대학교 데이터베이스 6조</span>
     </div>
     <ul>
-      <li class="btn btn1 mx-5 px-5">
-      <nuxt-link to="./login">LOGOUT</nuxt-link>
-      </li>
+      <v-btn color="primary" rounded @click.prevent="onLogOut">로그아웃</v-btn>
+      <!-- <li class="btn btn1 mx-5 px-5">-->
+      <nuxt-link to="./signup">회원가입</nuxt-link>
+      <!-- </li>
       <li class="btn btn2">
-      <nuxt-link to="./signup">SIGN UP</nuxt-link>
-      </li>
-      
+      <nuxt-link to="./signup">회원가입</nuxt-link>
+      </li> -->  
       </ul>
   </nav>
 </template>
 
 <script>
-export default {}
+export default {
+  methods: {
+    onLogOut() {
+      this.$store.dispatch('users/logOut')
+      this.$router.push({
+        path: '/login',
+      });      
+    }
+  },
+}
 </script>
 
 <style scoped>
 nav {
   box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
-  background-color: rgb(231, 224, 240);
+  background-color: #eee;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -49,19 +55,14 @@ nav {
   font-size: 24px;
 }
 .subheader {
-  color: rgb(165, 81, 158);
+  color: #ccc;
 }
 a {
   color: var(--theme-link-color);
   text-decoration: none;
   cursor: pointer;
 }
-img{
-  position:relative;
-  max-height: 60px;
-  left:-50%;
-  top:-15%;
-}
+
 .btn {
   position: relative;
   display: inline-block;
