@@ -1,86 +1,99 @@
 <template>
-
-  <div class="chat-wrapper">
-    <div
-      ref="chatroom"
-      class="chatroom"
-    >
-      <Message
-        v-for="(message, index) in messages"
-        :key="`message-${index}`"
-        :message="message"
-        :owner="message.id === user.id"
-      />
+  <nav class="nav">
+    <div class="logo">
+      <a href="./main" class="logo text-lg">
+        연세톡
+      </a>
+      <span class="subheader">연세대학교 데이터베이스 6조</span>
     </div>
-
-    <div class="chat__form">
-      <ChatForm />
-    </div>
-  </div>
-
+    <ul>
+      <v-btn color="primary" rounded @click.prevent="onLogOut">로그아웃</v-btn>
+      <!-- <li class="btn btn1 mx-5 px-5">-->
+      <nuxt-link to="./signup">회원가입</nuxt-link>
+      <!-- </li>
+      <li class="btn btn2">
+      <nuxt-link to="./signup">회원가입</nuxt-link>
+      </li> -->  
+      </ul>
+  </nav>
 </template>
 
 <script>
-import { mapState } from "vuex";
-import Message from "@/components/Message";
-import ChatForm from "@/components/ChatForm";
 export default {
-  name: "ChatPage",
-  layout: "chatroom",
-  components: {
-    Message,
-    ChatForm,
+  methods: {
+    onLogOut() {
+      this.$store.dispatch('users/logOut')
+      this.$router.push({
+        path: '/login',
+      });      
+    }
   },
-  computed: {
-    ...mapState(["user", "messages", "users"]),
-  },
-  watch: {
-    messages() {
-      setTimeout(() => {
-        if (this.$refs.chat) {
-          this.$refs.chat.scrollTop = this.$refs.chat.scrollHeight;
-        }
-      }, 0);
-    },
-  },
-  head() {
-    return {
-      title: `Chat Room ${this.user}`,
-    };
-  },
-};
+}
 </script>
 
 <style scoped>
-.chat-wrapper {
-  height: 100%;
-  position: relative;
-  overflow: hidden;
-}
-.chat__form {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 1rem;
-  height: 80px;
-}
-.chat {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 80px;
-  padding: 1rem;
-  overflow-y: auto;
-  color: #000;
-}
-.chat__typing {
-  position: absolute;
+nav {
+  padding: 10px 10px;
+  box-shadow: rgb(100 100 111 / 10%) 0px 7px 29px 0px;
+  background-color: rgb(126, 182, 255);
   display: flex;
-  bottom: 50px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 70px;
+  font-weight: ligher;
+  letter-spacing: 0.5px;
 }
-.chat__typing-user:not(first-child) {
-  margin-left: 15px;
+.logo {
+  box-sizing: content-box;
+  padding: 0 12px;
+  height: 100%;
+  flex: 1 0 auto;
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+}
+.text-lg {
+  font-size: 24px;
+}
+.subheader {
+  color: rgb(255, 255, 255);
+}
+a {
+  color: var(--theme-link-color);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn {
+  position: relative;
+  display: inline-block;
+  padding: .8em;
+  color: var(--theme-button-color);
+  border: 1px solid transparent;
+  border-radius: 3px;
+  background-color: transparent;
+  outline: none;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: normal;
+  line-height: 1.15384615;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  margin: 2px;
+}
+.btn:hover {
+  opacity: 0.7;
+}
+
+.btn1 {
+  background-color: #fcc;
+}
+.btn2 {
+  background-color: #ffc;
+}
+.btn3 {
+  background-color: #cff;
 }
 </style>
