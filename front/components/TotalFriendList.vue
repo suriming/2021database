@@ -7,13 +7,13 @@
           <span class="white--text headline">실험1</span>
         </v-list-item-avatar>
         <v-list-item-content>
-          <v-list-item-title>{{user.id}}</v-list-item-title>
+          <v-list-item-title>{{user.name}}</v-list-item-title>
         </v-list-item-content>
         <v-list-item-content>
-          <v-list-item-title>{{user.nickname}}</v-list-item-title>
+          <v-list-item-title>{{user.status_message}}</v-list-item-title>
         </v-list-item-content>        
         <v-list-item-action>
-          <v-icon @click="remove(user.id)">mdi-minus-circle-outline</v-icon>
+          <v-icon @click="remove(user.name)">mdi-minus-circle-outline</v-icon>
         </v-list-item-action>
       </v-list-item>
     </v-col>

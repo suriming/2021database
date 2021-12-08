@@ -12,10 +12,10 @@
             <v-col cols="12" sm="8"> -->
               <v-form ref="form" v-model="valid" @submit.prevent="onSubmitForm">
                 <v-text-field
-                    v-model="email"
-                    :rules="emailRules"
-                    label="이메일"
-                    type="email"
+                    v-model="id"
+                    :rules="idRules"
+                    label="아이디"
+                    type="id"
                     required
                 />
                 <v-text-field
@@ -43,11 +43,11 @@
     data() {
       return {
         valid: false,
-        email: '',
+        id: '',
         password: '',
-        emailRules: [
-          v => !!v || '이메일은 필수입니다.',
-          v => /.+@.+/.test(v) || '이메일이 유효하지 않습니다.',
+        idRules: [
+          v => !!v || '아이디는 필수입니다.',
+          // v => /.+@.+/.test(v) || '이메일이 유효하지 않습니다.',
         ],
         passwordRules: [
           v => !!v || '비밀번호는 필수입니다.',
@@ -58,19 +58,57 @@
       me() {
         return this.$store.state.users.me;
       },
+      isLoggedIn(){
+        return this.$store.state.users.isLoggedIn;
+      }
     },
+    // fetch({ store }){
+    //   return Promise.all([
+    //     store.dispatch(this.$store.state.isLoggedIn)
+    //   ])
+    // },
     methods: {
-      onSubmitForm() {
-        if (this.$refs.form.validate()) {
-          this.$store.dispatch('users/login', {
-            email: this.email,
-            nickname: '제로초',
-          }),
+      async getInfo() {
+        await this.$store.dispatch('users/logIn', {
+          id: this.id,
+          password: this.password,
+        })
+      },
+      async onSubmitForm() {
+        if (this.$refs.form.validate()){
+          await this.getInfo()
+        }
+        console.log(this.$store.state.users.isLoggedIn)
+        if(this.$store.state.users.isLoggedIn ===true) {
+          this.$store.dispatch('users/loadFriend')
+          this.$store.dispatch('users/loadMe'),
           this.$router.push({
-            path: '/main',
-          })              
+            path: '/friendpage',
+          })
+        } else {
+          alert('안됨')
         }
       },
+      // async onSubmitForm() {
+      //   if (this.$refs.form.validate()) {
+      //     this.$store.dispatch('users/logIn', {
+      //       id: this.id,
+      //       password: this.password,
+      //     })
+      //     .then(()=>{
+      //         console.log(this.$store.state.users.isLoggedIn)
+      //         if(this.$store.state.users.isLoggedIn === true){
+      //           this.$router.push({
+      //             path: '/friendpage',
+      //           });
+      //         } else {
+      //           alert('안됨');}     
+      //           })
+      //     .catch(()=>{
+      //        alert('안됨')
+      //     })
+      //   }
+      // },
       onLogOut() {
         this.$store.dispatch('users/logOut')
       }

@@ -7,19 +7,28 @@
       <span class="subheader">연세대학교 데이터베이스 6조</span>
     </div>
     <ul>
-      <li class="btn btn1 mx-5 px-5">
-      <nuxt-link to="./login">logout</nuxt-link>
-      </li>
+      <v-btn color="primary" rounded @click.prevent="onLogOut">로그아웃</v-btn>
+      <!-- <li class="btn btn1 mx-5 px-5">-->
+      <nuxt-link to="./signup">회원가입</nuxt-link>
+      <!-- </li>
       <li class="btn btn2">
       <nuxt-link to="./signup">회원가입</nuxt-link>
-      </li>
-      
+      </li> -->  
       </ul>
   </nav>
 </template>
 
 <script>
-export default {}
+export default {
+  methods: {
+    onLogOut() {
+      this.$store.dispatch('users/logOut')
+      this.$router.push({
+        path: '/login',
+      });      
+    }
+  },
+}
 </script>
 
 <style scoped>

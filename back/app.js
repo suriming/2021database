@@ -6,7 +6,7 @@ var http = require('http')
 const express = require('express');
 const db = require('./modules/db');
 const app = express();
-const friendsRouter = require('./router/router_friends');
+const friendsRouter = require('./routes/router_friends');
 const cors = require('cors');
 const corsOptions = {
     origin: "http://localhost:3000",
@@ -19,11 +19,11 @@ app.get('/api/', (req, res) => {
 });
 
 // indexRouter process HTTP request of http://127.0.0.1/~ 
-var indexRouter = require('./router/index');
+var indexRouter = require('./routes/index');
 
 // use router module
-var userRouter = require('./router/user');
-var chatlistRouter = require('./router/chatlist');
+var userRouter = require('./routes/user');
+var chatlistRouter = require('./routes/chatlist');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -42,9 +42,12 @@ app.use('/user', userRouter);
 app.use('/chatlist', chatlistRouter);
 app.use('/api/friends/', friendsRouter);
 
-app.listen(3085, () => {
-    console.log('백엔드 서버 ${3085}번 포트에서 작동중.');
-});
+// app.listen(3085, () => {
+//     console.log('백엔드 서버 ${3085}번 포트에서 작동중.');
+// });
+http.createServer(app).listen(8080, function(){
+    console.log('Server start!');
+})
 
 module.exports = app;
 // const app = require('express')();

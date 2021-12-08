@@ -6,6 +6,7 @@
         max-width="500"      
         >
         <v-container>
+          <v-btn color="blue" nuxt to="/friendpage">뒤로가기</v-btn>
           <v-subheader>내 정보 수정</v-subheader>
           <v-form ref="form" v-model="valid" @submit.prevent="onSubmitForm">
             <v-text-field
@@ -15,21 +16,26 @@
               :rules="status_messageRules"
               required
             />
-            <v-select
-              v-model="area"
-              label="지역"
-              :items="area"
-              item-text="name"
-              item-value="value"
-              type="area"
-              :rules="areaRules"
-              required
-            />
+            <v-btn color="blue" type="submit" nuxt to = "/friendpage">변경하기</v-btn>
           </v-form>
         </v-container>
+        <v-container fluid>
+      <v-row>
+        <v-col
+          cols="12"
+        >
+          <v-textarea
+            solo
+            name="csv-input"
+            label="현재 위치"
+          ></v-textarea>
+        </v-col>
+      </v-row>
+    </v-container>
         <v-container>
-            <v-btn color="blue" type="submit" nuxt to = "/friendpage">변경하기</v-btn>
-            <v-btn color="blue" nuxt to="/friendpage">취소</v-btn>
+            <v-file-input placeholder="위치정보가 담긴 csv파일을 올려보아요!"
+              truncate-length="15"
+            ></v-file-input>
         </v-container>
         <v-container>
             <v-btn color="blue" type="submit" nuxt to = "/login">로그아웃</v-btn>
@@ -44,6 +50,7 @@
   export default {
     data() {
       return {
+        csvfile: '',
         valid: false,
         status_message: '',
         terms: false,
@@ -71,7 +78,7 @@
                alert('폼이 유효하지 않습니다.'); 
             });
         }
-      }
+      },
     },
     head() {
       return {
@@ -80,6 +87,3 @@
     },
   };
 </script>
-
-<style>
-</style>

@@ -1,20 +1,34 @@
 import Vue from "vue";
 
 export const state = () => ({
-  me: 'admin',
+  me: null,
+  isLoggedIn: false,
   friendList: [],
-  nickname: 'yonsei',
-  other: {}
+  friendList2: [],
+  nickname: '',
+  other: {},
+  status_message: '',
+  name: ''
 });
-
 
 const totalFriends = 8;
 const limit=3;
 
 export const mutations = {
   setMe(state, payload) {
-    state.me = payload;
-  }, 
+    console.log(payload)
+    if (payload.success == false) {
+      state.isLoggedIn = false
+    } 
+    else {
+      state.isLoggedIn = true
+      console.log(state.isLoggedIn)
+      state.me = payload
+    }
+  },
+  logOut(state, payload){
+    state.isLoggedIn = false
+  },
   changeNickname(state, payload){
     state.me.nickname = payload.nickname
   },
@@ -30,39 +44,83 @@ export const mutations = {
     console.log(payload[0].FRIEND_ID)
     var tmp1 = [];
     var tmp2 = [];
+    var tmp3 = [];
+    var tmp4 = [];
     if (tmp1.length>0){
       tmp1.length = 0;
     }
     if (tmp2.length>0){
       tmp2.length = 0;
     }
-    for(let i=0; i<2;i++){
-      tmp1.push(payload[i].NAME)
-      tmp2.push(payload[i].STATUS_MESSAGE)
+    if (tmp3.length>0){
+      tmp3.length = 0;
+    }
+    if (tmp4.length>0){
+      tmp4.length = 0;
+    }
+    // if (payload.data === 'No friends'){
+    //   state.friendList2= [{
+    //     name: 'no friend',
+    //     status_message: 'empty'
+    //   }, {
+    //     name: 'please add friend',
+    //     status_message: ''
+    //   }];
+    // }
+    for(let i=0; i<payload.length ;i++){
+      if(payload[i].LOGIN_STATE === 1) {
+        tmp1.push(payload[i].NAME)
+        tmp2.push(payload[i].STATUS_MESSAGE)      
+      } else {
+        tmp3.push(payload[i].NAME)
+        tmp4.push(payload[i].STATUS_MESSAGE)        
+      }
     }
     const tmpuser = tmp1.map(function(v,i) {
       return {
-        id: v,
-        nickname: tmp2[i]
+        name: v,
+        status_message: tmp2[i]
       }
     })
-    state.friendList = tmpuser;
-    // const tmp = Array.map( v=>
-    //   id: 
-    //   )
-    // state.friendList = payload.data
-    // const diff = totalFriends - state.friendList.length;
-    // const fakeUsers = Array(diff > limit ? limit : diff).fill().map(v => ({
-    //   id: Math.random().toString(),
-    //   nickname: Math.floor(Math.random()*1000),
-    // }));
-
-  //  state.friendList = state.friendList.concat(tmpuser);
-    // state.friendList = payload.data
+    const tmpuser2 = tmp3.map(function(v,i) {
+      return {
+        name: v,
+        status_message: tmp4[i]
+      }
+    })
+    if (tmp1.length===0){
+      state.friendList= [{
+        name: 'no friend', 
+        status_message: 'empty'
+      }];
+    } else {
+      state.friendList = tmpuser;
+    }
+    if (tmp4.length===0){
+      state.friendList2= [{
+        name: 'no friend',
+        status_message: 'empty'
+      }, {
+        name: 'please add friend',
+        status_message: ''
+      }];
+    } else {
+      state.friendList2 = tmpuser2;     
+    }
   },
+  loadMe(state, payload) {
+    state.me.name = payload.name,
+    state.me.status_message = payload.status_message
+  }
 };
 
 export const actions = {
+  loadMe({ commit }, payload) {
+    return this.$axios.get('http://localhost:8080/user/whoAmI', {
+      withCredentials: true
+    });
+  },
+
   async loadUser({ state, commit }) {
     try {
       const res = await this.$axios.get('/user', {
@@ -75,13 +133,40 @@ export const actions = {
   },
 
   signUp({ commit, state }, payload) {
-    this.$axios.post()
+    this.$axios.post('http://localhost:3085/user/signup', {
+      id: payload.id,
+      password: payload.password,
+      name: payload.nickname,
+      type: payload.membership
+    }, {
+      withCredentials: true,
+    })
+    .then((res) => {
+      commit('setMe', res.data)
+    })
+    .catch((err) => {
+      console.error(err);
+    });
   },
-  logIn({ commit }, payload) {
-    commit('setMe', payload)
+  async logIn({ commit }, payload) {
+    await this.$axios.post('http://localhost:8080/user/login', {
+      id: payload.id,
+      password: payload.password,
+    }, {
+      withCredentials:true,
+    })
+    .then((res) => {
+      commit('setMe', res.data);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
   },   
-  logOut(context, payload) {
-    commit('setMe', null);
+  logOut( { commit }) {
+    this.$axios.post('http://localhost:8080/user/logout', {}, {
+      withCredentials: true,
+    }),
+    commit('logOut')
   },
   changeNickname({ commit }, payload) {
     commit('changeNickname', payload);
@@ -96,7 +181,7 @@ export const actions = {
   loadFriend({ commit, state }, payload) {
     // console.log(data);
     // commit('loadFriend');
-    return this.$axios.get('http://localhost:3085/api/friends/list/?My_id=admin@yonsei.ac.kr', {
+    return this.$axios.get(`http://localhost:8080/api/friends/list/?My_id=${state.me.id}`, {
       withCredentials: true,
       res: [],
     })
