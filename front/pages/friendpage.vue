@@ -34,7 +34,7 @@
 
     <v-list subheader>
       <v-subheader>접속중인 친구</v-subheader>
-
+        <total-friend-list :users = "friendList" />
       <v-list-item
         v-for="chat in previous"
         :key="chat.title"
@@ -60,11 +60,26 @@
 
 <script>
 import BottomNav from '../components/BottomNav.vue';
-import FriendList from '../components/TotalFriendList.vue';
+import TotalFriendList from '../components/TotalFriendList.vue';
   export default {
     components: {
         BottomNav,
-        FriendList,
+        TotalFriendList,
+    },
+      data() {
+    return{
+      valid: false, 
+      nickname: '',
+    }
+  },
+    computed: {
+    friendList() {
+      return this.$store.state.users.friendList;
+    }
+  },
+    fetch({ store }) {
+    store.dispatch('users/loadFriend');
     }
   }
+  
 </script>
