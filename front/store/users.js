@@ -5,7 +5,8 @@ export const state = () => ({
   isLoggedIn: false,
   friendList: [],
   nickname: '',
-  other: {}
+  other: {},
+  status_message: ''
 });
 
 
@@ -48,14 +49,14 @@ export const mutations = {
     if (tmp2.length>0){
       tmp2.length = 0;
     }
-    for(let i=0; i<2;i++){
+    for(let i=0; i<payload.length ;i++){
       tmp1.push(payload[i].NAME)
       tmp2.push(payload[i].STATUS_MESSAGE)
     }
     const tmpuser = tmp1.map(function(v,i) {
       return {
-        id: v,
-        nickname: tmp2[i]
+        name: v,
+        status_message: tmp2[i]
       }
     })
     state.friendList = tmpuser;
