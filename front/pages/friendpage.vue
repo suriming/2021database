@@ -11,13 +11,14 @@
         v-for="chat in recent"
         :key="chat.title"
       >
+      <!--
         <v-list-item-avatar>
           <v-img
             :alt="`${chat.title} avatar`"
             :src="chat.avatar"
           ></v-img>
-        </v-list-item-avatar>
-
+        </v-list-item-avatar>*/
+      -->
         <v-list-item-content>
           <v-list-item-title v-text="chat.title"></v-list-item-title>
         </v-list-item-content>
@@ -34,14 +35,14 @@
 
     <v-list subheader>
       <v-subheader>접속중인 친구</v-subheader>
+      <total-friend-list :users = "friendList" />
 
       <v-list-item
         v-for="chat in previous"
         :key="chat.title"
       >
-        <!-- <v-list-item-avatar> -->
-          <friend-list />
-          <!-- <v-img
+        <v-list-item-avatar>
+          <v-img
             :alt="`${chat.title} avatar`"
             :src="chat.avatar"
           ></v-img>
@@ -49,9 +50,33 @@
 
         <v-list-item-content>
           <v-list-item-title v-text="chat.title"></v-list-item-title>
-        </v-list-item-content> -->
+        </v-list-item-content>
       </v-list-item>
     </v-list>
+
+    <v-divider></v-divider>
+
+    <v-list subheader>
+      <v-subheader>미접속 친구</v-subheader>
+      <total-friend-list :users = "friendList" />
+
+      <v-list-item
+        v-for="chat in previous"
+        :key="chat.title"
+      >
+        <v-list-item-avatar>
+          <v-img
+            :alt="`${chat.title} avatar`"
+            :src="chat.avatar"
+          ></v-img>
+        </v-list-item-avatar>
+
+        <v-list-item-content>
+          <v-list-item-title v-text="chat.title"></v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
+
   <v-container>
     <bottom-nav />
   </v-container>
@@ -60,11 +85,27 @@
 
 <script>
 import BottomNav from '../components/BottomNav.vue';
-import FriendList from '../components/TotalFriendList.vue';
+import TotalFriendList from '../components/TotalFriendList.vue';
   export default {
     components: {
         BottomNav,
-        FriendList,
+        TotalFriendList,
+    },
+      data() {
+    return{
+      valid: false, 
+      nickname: '',
+    }
+  },
+    computed: {
+    friendList() {
+      return this.$store.state.users.friendList;
+    }
+  },
+
+    fetch({ store }) {
+    store.dispatch('users/loadFriend');
     }
   }
+  
 </script>
