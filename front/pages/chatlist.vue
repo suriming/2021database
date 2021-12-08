@@ -49,23 +49,20 @@
       recent: [
         {
           active: true,
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-          title: 'Jason Oner',
+          title: '원석',
           
         },
         {
           active: true,
-          title: '채팅 리스트를 불러옵시다',
+          title: '수림',
         },
         {
           active: false,
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
-          title: 'Cindy Baker',
+          title: '영서',
         },
         {
           active: false,
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
-          title: 'Ali Connors',
+          title: '창용',
         },
       ],
     }),
@@ -103,6 +100,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import { mapState, mapGetters } from "vuex";
 import Message from "@/components/Message";
@@ -134,6 +132,7 @@ export default {
   // },
 };
 </script>
+
 <style scoped>
 .chat-wrapper {
   height: 100%;
