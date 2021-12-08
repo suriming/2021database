@@ -75,7 +75,20 @@ export const actions = {
   },
 
   signUp({ commit, state }, payload) {
-    this.$axios.post()
+    this.$axios.post('http://localhost:3085/user/signup', {
+      id: payload.id,
+      password: payload.password,
+      name: payload.nickname,
+      type: payload.membership
+    }, {
+      withCredentials: true,
+    })
+    .then((res) => {
+      commit('setMe', res.data)
+    })
+    .catch((err) => {
+      console.error(err);
+    });
   },
   logIn({ commit }, payload) {
     commit('setMe', payload)
