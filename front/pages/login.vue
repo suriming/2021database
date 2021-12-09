@@ -86,29 +86,9 @@
             path: '/friendpage',
           })
         } else {
-          alert('안됨')
+          alert('아이디나 비밀번호를 다시 확인해주세요')
         }
       },
-      // async onSubmitForm() {
-      //   if (this.$refs.form.validate()) {
-      //     this.$store.dispatch('users/logIn', {
-      //       id: this.id,
-      //       password: this.password,
-      //     })
-      //     .then(()=>{
-      //         console.log(this.$store.state.users.isLoggedIn)
-      //         if(this.$store.state.users.isLoggedIn === true){
-      //           this.$router.push({
-      //             path: '/friendpage',
-      //           });
-      //         } else {
-      //           alert('안됨');}     
-      //           })
-      //     .catch(()=>{
-      //        alert('안됨')
-      //     })
-      //   }
-      // },
       onLogOut() {
         this.$store.dispatch('users/logOut')
       }

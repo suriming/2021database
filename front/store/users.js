@@ -88,7 +88,7 @@ export const mutations = {
         status_message: tmp4[i]
       }
     })
-    if (tmp1.length===0){
+    if (tmpuser.length===0){
       state.friendList= [{
         name: 'no friend', 
         status_message: 'empty'
@@ -109,21 +109,72 @@ export const mutations = {
     }
   },
   loadMe(state, payload) {
+    console.log(payload),
+    console.log(payload.stMsg),
     state.me.name = payload.name,
-    state.me.status_message = payload.status_message
+    state.me.status_message = payload.stMsg[0].STATUS_MESSAGE,
+    console.log(state.me.status_message)
+  },
+  searchLocationEng(state, payload) {
+    console.log(payload[0])
+  },
+  editStatusMessage(state, payload) {
+    console.log(payload.success)
+    if (payload.success === true) {
+      alert('상테메세지가 변경되었습니다')
+    }
   }
 };
 
 export const actions = {
-  loadMe({ commit }, payload) {
-    return this.$axios.get('http://localhost:8080/user/whoAmI', {
-      withCredentials: true
+  editStatusMessage({ commit }, payload) {
+    this.$axios.post('http://localhost:8080/api/myinfo/userStMsg', {
+      My_id: payload.id,
+      statusMsg: payload.status_message
+    }, {
+      withCredentials: true,
+    })
+    .then((res) => {
+      commit('editStatusMessage', res.data)
+    })
+    .catch((err) => {
+      console.error(err);
     });
+  },
+  searchLocationEng({ commit }, payload) {
+    console.log(payload.this_ssid)
+    return this.$axios.get(`http://localhost:8080/api/location/SSID`, 
+      {userID: payload.id,
+      this_ssid: payload.this_ssid
+      },{
+      withCredentials:true
+    })
+      .then((res) => {
+        // console.log(res.FRIEND_ID)
+        // const data = res.body
+        // const test = res.data.FRIEND_ID.
+        console.log(res),
+        console.log(res.data),
+        commit('searchLocationEng', res.data)
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  },
+  loadMe({ commit }, payload) {
+    return this.$axios.get('http://localhost:8080/api/user/whoAmI', {
+      withCredentials: true
+    })
+    .then((res) => {
+      console.log(res)
+      console.log(res.data)
+      commit('loadMe', res.data);
+    })
   },
 
   async loadUser({ state, commit }) {
     try {
-      const res = await this.$axios.get('/user', {
+      const res = await this.$axios.get('/api/user', {
         withCredentials: true,
       });
       commit('setMe', res.data);
@@ -133,7 +184,7 @@ export const actions = {
   },
 
   signUp({ commit, state }, payload) {
-    this.$axios.post('http://localhost:3085/user/signup', {
+    this.$axios.post('http://localhost:8080/api/user/signup', {
       id: payload.id,
       password: payload.password,
       name: payload.nickname,
@@ -149,7 +200,7 @@ export const actions = {
     });
   },
   async logIn({ commit }, payload) {
-    await this.$axios.post('http://localhost:8080/user/login', {
+    await this.$axios.post('http://localhost:8080/api/user/login', {
       id: payload.id,
       password: payload.password,
     }, {
@@ -163,7 +214,7 @@ export const actions = {
     });
   },   
   logOut( { commit }) {
-    this.$axios.post('http://localhost:8080/user/logout', {}, {
+    this.$axios.post('http://localhost:8080/api/user/logout', {}, {
       withCredentials: true,
     }),
     commit('logOut')

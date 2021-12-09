@@ -81,8 +81,8 @@ router.post('/logout', verifyMiddleWare, async(req, res, next) => {
 // Get Login Status
 router.get('/whoAmI', verifyMiddleWare, async(req, res, next) => {
   const {id, name} = req.decoded;
-  const {stMsg} = await query(`SELECT STATUS_MESSAGE FROM user WHERE ID = '${id}'`);
-  res.json({ // response id, name and status message
+  const stMsg = await query(`SELECT STATUS_MESSAGE FROM user WHERE ID = '${id}'`);
+  res.send({ // response id, name and status message
     success: id ? true : false,
     id,
     name,

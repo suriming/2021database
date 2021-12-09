@@ -5,8 +5,18 @@
   >
     <v-list subheader>
       <v-subheader>내 정보</v-subheader>
-      <v-list-item>
-        <div>{{name}}</div>
+      <v-list-item> 
+          <v-list-item-avatar color="indigo">
+            <span class="white--text headline">나</span>
+          </v-list-item-avatar>      
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>{{name}}</v-list-item-title>
+            </v-list-item-content>
+            <v-list-item-content>
+              <v-list-item-title>{{status_message}}</v-list-item-title>
+            </v-list-item-content>     
+          </v-list-item>
       </v-list-item>
       <v-btn dark color="blue" nuxt to="/edit" type="submit">내 정보 수정</v-btn>
 
@@ -22,6 +32,7 @@
         </v-list-item-icon>
       </v-list-item>
     </v-list>
+    
 
     <v-divider></v-divider>
 
@@ -70,10 +81,16 @@ import TotalFriendList2 from '../components/TotalFriendList2.vue';
     },
     name() {
       return this.$store.state.users.me.name;
+    },
+    status_message() {
+      return this.$store.state.users.me.status_message;
     }
   },
     fetch({ store }) {
     store.dispatch('users/loadFriend');
+    },
+    fetch({ store}) {
+    store.dispatch('users/loadMe')
     }
   }
   

@@ -1,7 +1,7 @@
 <template>
   <nav class="nav">
     <div class="logo">
-      <a href="./main" class="logo text-lg">
+      <a href="./login" class="logo text-lg">
         연세톡
       </a>
       <span class="subheader">연세대학교 데이터베이스 6조</span>
@@ -33,8 +33,9 @@ export default {
 
 <style scoped>
 nav {
-  box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
-  background-color: #eee;
+  padding: 10px 10px;
+  box-shadow: rgb(100 100 111 / 10%) 0px 7px 29px 0px;
+  background-color: rgb(126, 182, 255);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -55,7 +56,7 @@ nav {
   font-size: 24px;
 }
 .subheader {
-  color: #ccc;
+  color: rgb(255, 255, 255);
 }
 a {
   color: var(--theme-link-color);

@@ -8,7 +8,7 @@
         <v-container>
           <v-btn color="blue" nuxt to="/friendpage">뒤로가기</v-btn>
           <v-subheader>내 정보 수정</v-subheader>
-          <v-form ref="form" v-model="valid" @submit.prevent="onSubmitForm">
+          <v-form ref="form" v-model="valid" @submit.prevent="editStatusMessage">
             <v-text-field
               v-model="status_message"
               label="상태 메시지"
@@ -16,7 +16,7 @@
               :rules="status_messageRules"
               required
             />
-            <v-btn color="blue" type="submit" nuxt to = "/friendpage">변경하기</v-btn>
+            <v-btn color="blue" type="submit">변경하기</v-btn>
           </v-form>
         </v-container>
         <v-container fluid>
@@ -62,24 +62,29 @@
         ],
       };
     },
-    methods: {
-      onSubmitForm() {
-        if (this.$refs.form.validate()) {
-          this.$store.dispatch('users/signUp', {
-            nickname: this.nickname,
-            email: this.email,
-          })
-            .then(() => {
-              this.$router.push({
-                path: '/login',
-              });
-            })
-            .catch(()=> {
-               alert('폼이 유효하지 않습니다.'); 
-            });
-        }
-      },
+        computed: {
+      me() {
+        return this.$store.state.users.me;
+      }
     },
+    methods: {
+      editStatusMessage() {
+        if (this.$refs.form.validate()) {
+          this.$store.dispatch('users/editStatusMessage', {
+            id: this.$store.state.users.me.id,
+            status_message: this.status_message
+          })
+            // .then(() => {
+            //   this.$router.push({
+            //     path: '/login',
+            //   });
+            // })
+            // .catch(()=> {
+            //    alert('폼이 유효하지 않습니다.'); 
+            // });
+        }
+      }
+      },
     head() {
       return {
         title: '내 정보 수정',
