@@ -14,7 +14,7 @@
       height="300px"
     ></v-img>
   <v-card-title>
-      <nuxt-link to="./">공학관</nuxt-link>
+      <nuxt-link to="./friendpage">공학관</nuxt-link>
     </v-card-title>
 
     </v-card>
@@ -29,7 +29,7 @@
       height="300px"
     ></v-img>
       <v-card-title>
-      <nuxt-link to="./">백양관</nuxt-link>
+      <nuxt-link to="./friendpage">백양관</nuxt-link>
     </v-card-title>
     </v-card>
 
@@ -43,7 +43,7 @@
       height="300px"
     ></v-img>
   <v-card-title>
-      <nuxt-link to="./">학생회관</nuxt-link>
+      <nuxt-link to="./friendpage">학생회관</nuxt-link>
     </v-card-title>
     </v-card>
 
@@ -58,7 +58,7 @@
       height="300px"
     ></v-img>
        <v-card-title>
-      <nuxt-link to="./">신촌역</nuxt-link>
+      <nuxt-link to="./friendpage">신촌역</nuxt-link>
     </v-card-title>
     </v-card>
 
