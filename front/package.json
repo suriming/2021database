@@ -7,12 +7,13 @@
     "dev": "nuxt",
     "lint": "eslint **/*",
     "build": "nuxt build",
-    "start": "node server/index.js"
+    "start": "nuxt start"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
+    "@nuxtjs/moment": "^1.6.1",
     "@nuxtjs/pwa": "^3.3.5",
     "@nuxtjs/vuetify": "^1.12.1",
     "axios": "^0.24.0",
@@ -31,5 +32,12 @@
   },
   "resolutions": {
     "ajv": "6.5.5"
-  }
+  },
+  "apiPort": "8600",
+  "socketPort": "8601",
+  "browserslish": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
 }
