@@ -26,8 +26,8 @@ module.exports = {
     // ],
     axios: {
         // baseURL: 'https://localhost:3000'
-        browserBaseURL: process.env.NODE_ENV === 'production' ? 'https://165.132.105.26/8600' : 'http://localhost:3085',
-        baseURL: process.env.NODE_ENV === 'production' ? 'https://165.132.105.26/8600' : 'http://localhost:3085',
+        browserBaseURL: process.env.NODE_ENV === 'production' ? 'https://165.132.105.26:8600' : 'http://localhost:3085',
+        baseURL: process.env.NODE_ENV === 'production' ? 'https://165.132.105.26:8600' : 'http://localhost:3085',
         https: false,
         // baseURL: `${window.location.protocol}//${window.location.hostname}:${config.apiPort}/api`
     }
